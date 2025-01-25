@@ -1,10 +1,18 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BookOpen, Search, User, Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+  const isLoggedIn = !!token;
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
 
   return (
     <nav className="border-b bg-white">
@@ -34,15 +42,27 @@ export function Navbar() {
             <Button variant="ghost">Browse</Button>
           </Link>
           
-          <Link to="/upload">
-            <Button>Upload Comic</Button>
-          </Link>
-          
-          <Link to="/profile">
-            <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
-            </Button>
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <Link to="/upload">
+                <Button>Upload Comic</Button>
+              </Link>
+              
+              <Link to="/profile">
+                <Button variant="ghost" size="icon">
+                  <User className="h-5 w-5" />
+                </Button>
+              </Link>
+  
+              <Button variant="ghost" onClick={handleLogout}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Link to="/login">
+              <Button>Sign In</Button>
+            </Link>
+          )}
         </div>
       </div>
 
@@ -62,15 +82,27 @@ export function Navbar() {
               <Button variant="ghost" className="w-full">Browse</Button>
             </Link>
             
-            <Link to="/upload">
-              <Button className="w-full">Upload Comic</Button>
-            </Link>
-            
-            <Link to="/profile">
-              <Button variant="ghost" size="icon" className="w-full flex justify-center">
-                <User className="h-5 w-5" />
-              </Button>
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <Link to="/upload">
+                  <Button className="w-full">Upload Comic</Button>
+                </Link>
+                
+                <Link to="/profile">
+                  <Button variant="ghost" size="icon" className="w-full flex justify-center">
+                    <User className="h-5 w-5" />
+                  </Button>
+                </Link>
+
+                <Button variant="ghost" className="w-full" onClick={handleLogout}>
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Link to="/login">
+                <Button className="w-full">Sign In</Button>
+              </Link>
+            )}
           </div>
         </div>
       )}
