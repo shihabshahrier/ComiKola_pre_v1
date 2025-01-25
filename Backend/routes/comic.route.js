@@ -3,6 +3,7 @@ const router = express.Router();
 const {body} = require('express-validator');
 const comicController = require('../controllers/comic.controller');
 const authMiddleware = require('../middleware/auth.middleware');
+const comicAuthorMiddleware = require('../middleware/author.middleware');
 
 router.post('/upload', [
     body('title').isLength({min: 3}).withMessage('Title must be at least 3 characters long'),
@@ -13,5 +14,6 @@ router.post('/upload', [
 ], authMiddleware.authUser, comicController.uploadComic);
 
 router.get('/all', comicController.getAllComics);
+router.get('/:comicId', comicController.getComicById);
 
 module.exports = router;

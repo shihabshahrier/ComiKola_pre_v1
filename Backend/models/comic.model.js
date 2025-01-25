@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 const uuid = require('uuid');
 
 const comicSchema = new mongoose.Schema({
-    comicId: {
-        type: String,
-        unique: true,
-        default: uuid.v4
-    },
     title: {
         type: String,
         required: true,
