@@ -191,10 +191,10 @@ Authorization: Bearer jwt_token_here
   ...
 ]
 ```
-````
 
 
 ### 7️⃣ Get Comic by ID
+
 **Endpoint:** `GET /api/comic/:comicId`
 
 **Description:** Retrieves a comic by its ID.
