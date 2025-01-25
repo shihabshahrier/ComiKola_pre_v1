@@ -4,6 +4,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
 export function Home() {
+  const token = localStorage.getItem('token');
+  const isLoggedIn = !!token;
+
   const featuredComics = [
     {
       id: '1',
@@ -37,11 +40,13 @@ export function Home() {
             discover new stories, and connect with fellow enthusiasts.
           </p>
           <div className="flex flex-col items-center gap-4 sm:flex-row justify-center">
-            <Link to="/register">
-              <Button size="lg" className="w-full sm:w-auto bg-white border-white text-neutral-900 hover:bg-amber-300">
-                Get Started
-              </Button>
-            </Link>
+            {!isLoggedIn && (
+              <Link to="/register">
+                <Button size="lg" className="w-full sm:w-auto bg-white border-white text-neutral-900 hover:bg-amber-300">
+                  Get Started
+                </Button>
+              </Link>
+            )}
             <Link to="/comics">
               <Button size="lg" variant="outline" className="w-full sm:w-auto border-white text-neutral-900 hover:bg-amber-300">
                 Browse Comics
